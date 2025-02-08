@@ -23,7 +23,7 @@ class Appointment {
       patientId: json['patient_id'],
       appointmentDate: json['appointment_date'],
       appointmentTime: json['appointment_time'],
-      isAvailable: json['is_available'],
+      isAvailable: json['is_available'] == 1, // تحويل الرقم إلى boolean
     );
   }
 
@@ -35,7 +35,7 @@ class Appointment {
       'patient_id': patientId,
       'appointment_date': appointmentDate,
       'appointment_time': appointmentTime,
-      'is_available': isAvailable,
+      'is_available': isAvailable ? 1 : 0, // تحويل boolean إلى رقم
     };
   }
 }

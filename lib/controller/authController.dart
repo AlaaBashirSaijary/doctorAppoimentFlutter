@@ -46,7 +46,7 @@ class AuthController extends GetxController {
         if (role == 'admin') {
           Get.offAll(() => DoctorRequestsScreen());
         } else if (role == 'doctor') {
-          Get.offAll(() => DoctorHomeScreen());
+          Get.offAll(() => DoctorDashboardScreen());
         } else if (role == 'patient') {
           Get.offAll(() => HomeScrenn());
         } else {

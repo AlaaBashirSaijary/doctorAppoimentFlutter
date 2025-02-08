@@ -37,7 +37,7 @@ dependencies:
   cupertino_icons: ^1.0.2
   get:
   shared_preferences: 
- 
+  table_calendar:
   image_picker: 
   file_picker:
 
