@@ -40,6 +40,7 @@ dependencies:
   table_calendar:
   image_picker: 
   file_picker:
+  flutter_rating_bar:
 
 dev_dependencies:
   flutter_test:

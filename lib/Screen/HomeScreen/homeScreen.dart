@@ -1,9 +1,11 @@
+import 'package:doctorappoiment/Screen/HomeScreen/AppoimentinDoctor.dart';
 import 'package:doctorappoiment/Screen/HomeScreen/Home.dart';
-import 'package:doctorappoiment/Screen/profile_Screen/prfile.dart';
+import 'package:doctorappoiment/Screen/HomeScreen/payment.dart';
 import 'package:doctorappoiment/Style/consts.dart';
 import 'package:get/get.dart';
 
 import '../../controller/home_controller.dart';
+import 'PatientDashboardScreen.dart';
 
 class HomeScrenn extends StatelessWidget {
   const HomeScrenn({super.key});
@@ -23,7 +25,7 @@ class HomeScrenn extends StatelessWidget {
             icCategories,
             width: 26,
           ),
-          label: category),
+          label: 'Booking'),
       BottomNavigationBarItem(
           icon: Image.asset(
             icCart,
@@ -38,7 +40,7 @@ class HomeScrenn extends StatelessWidget {
           label: account),
     ];
     var navBody = [
-    Home(),Profile()
+    Home(),BookAppointmentScreen(),PaymentScreen(),PatientDashboardScreen()
     ];
 
     return Scaffold(

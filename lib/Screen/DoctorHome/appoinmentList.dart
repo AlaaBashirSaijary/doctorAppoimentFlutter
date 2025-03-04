@@ -1,8 +1,8 @@
 import 'package:doctorappoiment/Style/colors.dart';
+import 'package:doctorappoiment/controller/DoctorController%20.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
-import '../../controller/DoctorController .dart';
 
 class AppointmentListScreen extends StatelessWidget {
   final DoctorController controller = Get.find();
@@ -20,9 +20,10 @@ class AppointmentListScreen extends StatelessWidget {
           return Center(child: CircularProgressIndicator());
         }
 
-        // تصنيف المواعيد حسب patient_id
-        final bookedAppointments = controller.appointments.where((e) => e.patientId != null).toList();
-        final availableAppointments = controller.appointments.where((e) => e.patientId == null).toList();
+        final bookedAppointments =
+            controller.appointments.where((e) => e.patientId != null).toList();
+        final availableAppointments =
+            controller.appointments.where((e) => e.patientId == null).toList();
 
         if (controller.appointments.isEmpty) {
           return Center(child: Text("No appointments found"));
@@ -69,7 +70,7 @@ class AppointmentListScreen extends StatelessWidget {
                 color: status == "Available" ? Colors.green : Colors.red,
               ),
             ),
-            onLongPress: status == "Booked"
+            onTap: status == "Booked"
                 ? () {
                     Get.defaultDialog(
                       title: "Cancel Appointment",
@@ -77,9 +78,20 @@ class AppointmentListScreen extends StatelessWidget {
                       textCancel: "No",
                       textConfirm: "Yes",
                       confirmTextColor: Colors.white,
-                      onConfirm: () {
-                        controller.cancelAppointment(appointment.id);
-                        Get.back();
+                      onConfirm: () async {
+                        try {
+                          Get.back(); // إغلاق الحوار قبل العملية
+                          controller.isLoading.value = true;
+                          await controller.cancelAppointment(appointment.id);
+                          await controller.fetchDoctorAppointments();
+                          Get.snackbar("Success", "Appointment canceled successfully",
+                              backgroundColor: Colors.green.shade300);
+                        } catch (e) {
+                          Get.snackbar("Error", "Failed to cancel the appointment",
+                              backgroundColor: Colors.red.shade300);
+                        } finally {
+                          controller.isLoading.value = false;
+                        }
                       },
                     );
                   }

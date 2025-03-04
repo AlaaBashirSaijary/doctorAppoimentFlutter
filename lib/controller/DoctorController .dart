@@ -11,7 +11,8 @@ class DoctorController extends GetxController {
   var patients = <Map<String, dynamic>>[].obs;
   var selectedDay = DateTime.now().obs; // تم إضافة هذا المتغير
   var selectedTime = '09:00'.obs; // تم إضافة هذا المتغير
-  var availableTimes = ['09:00', '10:00', '11:00', '12:00', '13:00'].obs; // تم إضافة هذا المتغير
+  var availableTimes =
+      ['09:00', '10:00', '11:00', '12:00', '13:00'].obs; // تم إضافة هذا المتغير
 
   final String baseUrl = 'https://api-doctor.clingroup.net/api';
   String? userToken;
@@ -51,7 +52,8 @@ class DoctorController extends GetxController {
       if (response.statusCode == 200) {
         var jsonData = json.decode(response.body);
         var appointmentsList = jsonData['appointments'] as List;
-        appointments.value = appointmentsList.map((e) => Appointment.fromJson(e)).toList();
+        appointments.value =
+            appointmentsList.map((e) => Appointment.fromJson(e)).toList();
       } else {
         Get.snackbar('Error', 'Failed to load appointments');
       }
@@ -64,34 +66,34 @@ class DoctorController extends GetxController {
 
   // Fetch patients for the doctor
   // Fetch patients for the doctor
-Future<void> fetchPatientsForDoctor() async {
-  isLoading(true);
-  try {
-    var response = await http.get(
-      Uri.parse('$baseUrl/doctor/patients'),
-      headers: headers,
-    );
+  Future<void> fetchPatientsForDoctor() async {
+    isLoading(true);
+    try {
+      var response = await http.get(
+        Uri.parse('$baseUrl/doctor/patients'),
+        headers: headers,
+      );
 
-    if (response.statusCode == 200) {
-      var jsonData = json.decode(response.body);
-      
-      // استخراج قائمة المرضى
-      if (jsonData.containsKey('patients')) {
-        var patientsList = jsonData['patients'] as List;
-        patients.value = patientsList.map((e) => e as Map<String, dynamic>).toList();
+      if (response.statusCode == 200) {
+        var jsonData = json.decode(response.body);
+
+        // استخراج قائمة المرضى
+        if (jsonData.containsKey('patients')) {
+          var patientsList = jsonData['patients'] as List;
+          patients.value =
+              patientsList.map((e) => e as Map<String, dynamic>).toList();
+        } else {
+          patients.clear();
+        }
       } else {
-        patients.clear();
+        Get.snackbar('Error', 'Failed to load patients');
       }
-    } else {
-      Get.snackbar('Error', 'Failed to load patients');
+    } catch (e) {
+      Get.snackbar('Error', e.toString());
+    } finally {
+      isLoading(false);
     }
-  } catch (e) {
-    Get.snackbar('Error', e.toString());
-  } finally {
-    isLoading(false);
   }
-}
-
 
   // Cancel an appointment by doctor
   Future<void> cancelAppointment(int appointmentId) async {
@@ -101,7 +103,6 @@ Future<void> fetchPatientsForDoctor() async {
         Uri.parse('$baseUrl/doctor/appointments/$appointmentId'),
         headers: headers,
       );
-
       if (response.statusCode == 200) {
         Get.snackbar('Success', 'Appointment cancelled successfully');
         fetchDoctorAppointments(); // Re-fetch doctor appointments
@@ -116,7 +117,8 @@ Future<void> fetchPatientsForDoctor() async {
   }
 
   // Create a new available appointment for the doctor
-  Future<void> createAvailableAppointment(String appointmentDate, String appointmentTime) async {
+  Future<void> createAvailableAppointment(
+      String appointmentDate, String appointmentTime) async {
     isLoading(true);
     try {
       var response = await http.post(
@@ -142,8 +144,10 @@ Future<void> fetchPatientsForDoctor() async {
   }
 
   // Function to create appointment based on selected date and time
-  Future<void> createAppointment(DateTime selectedDate, String selectedTime) async {
-    String formattedDate = "${selectedDate.year}-${selectedDate.month.toString().padLeft(2, '0')}-${selectedDate.day.toString().padLeft(2, '0')}";
+  Future<void> createAppointment(
+      DateTime selectedDate, String selectedTime) async {
+    String formattedDate =
+        "${selectedDate.year}-${selectedDate.month.toString().padLeft(2, '0')}-${selectedDate.day.toString().padLeft(2, '0')}";
     await createAvailableAppointment(formattedDate, selectedTime);
   }
 }

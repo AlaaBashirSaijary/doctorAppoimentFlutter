@@ -6,6 +6,7 @@ import 'package:doctorappoiment/Screen/splach_Screen/auth_creen/login.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
+import 'Screen/HomeScreen/DoctorsListScreen.dart';
 import 'Screen/splach_Screen/splach.dart';
 import 'Style/colors.dart';
 import 'Style/styeles.dart';
@@ -33,7 +34,7 @@ class MyApp extends StatelessWidget {
             backgroundColor: Colors.transparent,
           ),
           fontFamily: regular),
-      home: Loginscreen(),
+      home: SplachScreen(),
     );
   }
 }

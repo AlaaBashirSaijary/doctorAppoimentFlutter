@@ -64,7 +64,7 @@ class EditProfile extends StatelessWidget {
                   CustomButton(
                       color: redColor,
                       onPressed: () {
-                        controller.ChangeImage();
+                        controller.changeImage();
                       },
                       textColor: whiteColor,
                       title: "Change"),
@@ -85,7 +85,7 @@ class EditProfile extends StatelessWidget {
                   const SizedBox(
                     height: 20,
                   ),
-                  controller.isloding.value
+                  controller.isLoading.value
                       ? CircularProgressIndicator(
                           valueColor: AlwaysStoppedAnimation(redColor),
                         )
@@ -95,8 +95,8 @@ class EditProfile extends StatelessWidget {
                               color: redColor,
                               onPressed: () async {
                                 controller.isloding(true);
-                                await controller.uploadProileImage();
-                                await controller.uploadProileFile(
+                                await controller.uploadProfileImage();
+                                await controller.uploadProfileFile(
                                     imgeUrl: controller.profileImageLink,
                                     name: controller.nameController.text,
                                     password: controller.passController.text);
